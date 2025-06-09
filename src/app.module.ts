@@ -3,12 +3,26 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AskModule } from './ask/ask.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Makes the config available globally
       envFilePath: '.env', // Path to your .env file
+    }),
+
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      ssl: true,
+      extra: {
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      },
+      autoLoadEntities: true,
+      synchronize: true,
     }),
 
     AskModule,
