@@ -34,4 +34,7 @@ export class User {
 
   @Column({ type: 'date', nullable: true })
   dateOfBirth: Date;
+
+  @Column()
+  password: string;
 }

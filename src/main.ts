@@ -20,6 +20,7 @@ async function bootstrap() {
     .setTitle('Sarkary API')
     .setDescription('API documentation for Sarkary App')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('apis', app, document);
