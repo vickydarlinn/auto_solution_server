@@ -1,9 +1,11 @@
+import { Question } from 'src/questions/entities/question.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('users')
@@ -37,4 +39,7 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Question, (question) => question.user)
+  questions: Question[];
 }

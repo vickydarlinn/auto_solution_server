@@ -29,3 +29,5 @@ export const ALLOWED_MIME_TYPES = [
   'image/png',
   'image/webp',
 ];
+
+export const REQUEST_USER_KEY = 'user';

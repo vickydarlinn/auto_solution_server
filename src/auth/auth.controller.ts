@@ -5,7 +5,7 @@ import { RegisterDto } from './dto/register.dto';
 import { Public } from './decorators/public.decorator';
 import { Request } from 'express';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { REQUEST_USER_KEY } from './auth.constant';
+import { REQUEST_USER_KEY } from 'src/common/constants';
 
 @Controller('auth')
 export class AuthController {
