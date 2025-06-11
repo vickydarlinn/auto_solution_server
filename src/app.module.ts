@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AskModule } from './ask/ask.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
@@ -28,7 +27,6 @@ import { QuestionsModule } from './questions/questions.module';
       synchronize: true,
     }),
     AuthModule, // <-- Add AuthModule here
-    AskModule,
     UsersModule,
     QuestionsModule,
   ],

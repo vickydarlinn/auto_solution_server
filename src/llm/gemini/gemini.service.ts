@@ -1,7 +1,8 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { GoogleGenAI } from '@google/genai';
 import { LlmService } from '../llm.service';
-import { MathSolutionResponse } from 'src/ask/dto/math-solution.dto';
+// import { MathSolutionResponse } from 'src/ask/dto/math-solution.dto';
+import { Solution } from 'src/common/interfaces/solution.interface';
 import { ALLOWED_MIME_TYPES, PROMPT } from 'src/common/constants';
 
 // todo:change model
@@ -17,9 +18,7 @@ export class GeminiService extends LlmService {
     this.ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   }
 
-  async sendImageAndGetAnswer(
-    image: Express.Multer.File,
-  ): Promise<MathSolutionResponse> {
+  async sendImageAndGetAnswer(image: Express.Multer.File): Promise<Solution> {
     if (!ALLOWED_MIME_TYPES.includes(image.mimetype)) {
       throw new BadRequestException(
         'Invalid image format. Only JPEG, PNG, and WebP are supported',
@@ -79,7 +78,7 @@ export class GeminiService extends LlmService {
     return response.text?.trim().toUpperCase().includes('YES') ?? false;
   }
 
-  private parseGeminiResponse(text: string): MathSolutionResponse {
+  private parseGeminiResponse(text: string): Solution {
     try {
       // Initialize default response
       let detailedSolution = '';
