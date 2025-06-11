@@ -3,7 +3,9 @@ import { QuestionsService } from './questions.service';
 import { Request } from 'express';
 import { REQUEST_USER_KEY } from 'src/common/constants';
 import { JwtPayload } from 'src/common/interfaces/jwt-payload.interface';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
