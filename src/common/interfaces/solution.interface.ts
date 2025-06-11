@@ -1,4 +1,4 @@
-export class MathSolutionResponse {
+export class Solution {
   detailedSolution: string;
   trickyToSolveFast: string;
 }

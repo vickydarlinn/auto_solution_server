@@ -8,14 +8,15 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { QuestionStatus } from '../enums/question-status.enum';
-import { Answer } from '../interfaces/answer.interface';
+
+import { Solution } from '../../common/interfaces/solution.interface';
 
 @Entity('questions')
 export class Question {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   title: string;
 
   @Column({ nullable: true })
@@ -25,7 +26,7 @@ export class Question {
   imageUrl: string; // Path to uploaded image
 
   @Column({ type: 'jsonb', nullable: true })
-  solution: Answer; // AI-generated solution
+  solution: Solution; // AI-generated solution
 
   @Column({
     type: 'enum',
@@ -35,16 +36,13 @@ export class Question {
   status: QuestionStatus;
 
   @Column({ nullable: true })
-  subject: string; // Math, Physics, Chemistry, etc.
+  subject: string;
 
   @Column({ nullable: true })
-  difficulty: string; // Easy, Medium, Hard
+  difficulty: string;
 
-  @ManyToOne(() => User, (user) => user.questions)
+  @ManyToOne(() => User, (user) => user.questions, { onDelete: 'CASCADE' })
   user: User;
-
-  @Column()
-  userId: string;
 
   @CreateDateColumn()
   createdAt: Date;

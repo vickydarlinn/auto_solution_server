@@ -20,7 +20,7 @@ export class CloudinaryService extends StorageService {
   ): Promise<{ url: string; id?: string }> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'uploads' },
+        { folder: 'User Questions' },
         (error, result) => {
           if (error || !result) {
             return reject(new Error(error?.message || 'Upload failed'));
