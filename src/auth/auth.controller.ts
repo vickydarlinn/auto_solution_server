@@ -6,6 +6,9 @@ import { Public } from './decorators/public.decorator';
 import { Request } from 'express';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { REQUEST_USER_KEY } from 'src/common/constants';
+import { ForgotPasswordDto } from './dto/forget-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { SendOtpDto } from './dto/send-otp.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -30,5 +33,23 @@ export class AuthController {
     return {
       message: 'hi',
     };
+  }
+
+  @Public()
+  @Post('send-otp')
+  async sendOtp(@Body() body: SendOtpDto) {
+    return await this.authService.sendOtp(body.phoneNumber);
+  }
+
+  @Public()
+  @Post('forgot-password')
+  async forgotPassword(@Body() body: ForgotPasswordDto) {
+    return await this.authService.sendForgotPasswordOtp(body.phoneNumber);
+  }
+
+  @Public()
+  @Post('reset-password')
+  async resetPassword(@Body() body: ResetPasswordDto) {
+    return await this.authService.resetPassword(body);
   }
 }

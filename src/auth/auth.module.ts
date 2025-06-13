@@ -8,6 +8,7 @@ import { BcryptService } from './hashing/bcrypt/bcrypt.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 import { ConfigService } from '@nestjs/config';
+import { OtpModule } from './otp/otp.module';
 
 @Module({
   imports: [
@@ -21,6 +22,8 @@ import { ConfigService } from '@nestjs/config';
         signOptions: { expiresIn: '10h' },
       }),
     }),
+
+    OtpModule,
   ],
   providers: [
     AuthService,

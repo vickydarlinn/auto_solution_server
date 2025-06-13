@@ -21,4 +21,9 @@ export class RegisterDto {
   @IsString()
   @IsNotEmpty()
   fullName: string;
+
+  @ApiProperty({ example: '123456' })
+  @IsString()
+  @IsNotEmpty()
+  otpCode: string; // <-- New field for OTP
 }
