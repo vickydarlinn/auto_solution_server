@@ -28,7 +28,7 @@ export class GeminiService extends LlmService {
     const imageBase64 = image.buffer.toString('base64');
 
     const response = await this.ai.models.generateContent({
-      model: 'gemini-1.5-flash',
+      model: process.env.GEMINI_MODEL!,
       contents: [
         {
           role: 'user',
@@ -44,6 +44,23 @@ export class GeminiService extends LlmService {
         },
       ],
     });
+    if (response.usageMetadata) {
+      console.log('--- sendImageAndGetAnswer Token Usage ---');
+      console.log(
+        'Prompt Token Count:',
+        response.usageMetadata.promptTokenCount,
+      );
+      console.log(
+        'Candidates Token Count:',
+        response.usageMetadata.candidatesTokenCount,
+      );
+      console.log('Total Token Count:', response.usageMetadata.totalTokenCount);
+      console.log('---------------------------------------');
+    } else {
+      console.warn(
+        'Usage metadata not available for sendImageAndGetAnswer response. This might happen for certain errors or model types.',
+      );
+    }
 
     if (!response.text) {
       throw new Error('No response generated from Gemini API');
@@ -56,7 +73,7 @@ export class GeminiService extends LlmService {
     const imageBase64 = image.buffer.toString('base64');
 
     const response = await this.ai.models.generateContent({
-      model: 'gemini-2.0-flash-001',
+      model: process.env.GEMINI_MODEL!,
       contents: [
         {
           role: 'user',

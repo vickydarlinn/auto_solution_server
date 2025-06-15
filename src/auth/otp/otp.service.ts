@@ -36,7 +36,20 @@ export class OtpService {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const otp = this.otpRepo.create({ phoneNumber, code, purpose });
     await this.otpRepo.save(otp);
-
+    if (process.env.IS_MESSAGE_ENABLED) {
+      const resp = await fetch(
+        `http://msg.icloudsms.com/rest/services/sendSMS/sendGroupSms?AUTH_KEY=${process.env.SMS_AUTH_KEY}&message=Your OTP for Mobile Verification for www.sarkariq.com is: ${code} Note: Please DO NOT SHARE this OTP with anyone. Thanks Beniwal Dairy Farm&senderId=beniwa&routeId=3&mobileNos=${phoneNumber}&smsContentType=english`,
+        {
+          method: 'GET',
+        },
+      );
+      if (!resp.ok) {
+        throw new HttpException(
+          'Failed to send OTP via SMS',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    }
     console.log(
       `Your verification code is ${code} for this number ${phoneNumber}`,
     );
